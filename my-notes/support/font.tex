@@ -1,0 +1,23 @@
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{14}{8}}
+\newcommand{\ssecfnt}{\fontsize{11}{0}}
+
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\bfseries}{\thesection}{}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries}{\thesubsection}{}{}
+
+\titleformat{\subsubsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{8pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+\linespread{1.3}

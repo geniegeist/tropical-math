@@ -1,0 +1,46 @@
+\usepackage[landscape, twocolumn, margin=0.8in]{geometry}
+
+% font
+\usepackage{fontspec}
+\setmainfont{Georgia}[
+  Path=./fonts/,
+  Extension = .ttf,
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Italic,
+  BoldItalicFont=*-BoldItalic
+]
+\setsansfont{Metropolis}[
+  Path=./fonts/,
+  Extension = .ttf,
+  UprightFont=*-Medium,
+  BoldFont=*-Bold,
+]
+
+% utility packages
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[many]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}   
+\usepackage{fancyhdr,lipsum}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+% change font size
+\usepackage[fontsize=8pt]{fontsize}
+
+% header line
+\fancyhead[L]{\textit{06/15/2022}}
+\fancyhead[R]{\textit{Duc Nguyen}}
+\fancyhead[C]{\textit{Seminar: Nonlinear Algebra}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
+
+% disable bibliography chapter title
+\usepackage{natbib}
+\renewcommand{\bibsection}{}

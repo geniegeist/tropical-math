@@ -1,0 +1,253 @@
+\documentclass{article}
+
+\include{support/header.tex}
+\include{support/color.tex}
+\include{support/font.tex}
+\include{support/environments.tex}
+
+\begin{document}
+
+\section*{Tropical Algebra}
+
+\subsection*{A. Tropical Arithmetic}
+
+\begin{itemize}
+    \item \textbf{\emph{Tropical semiring}} \( (\bar{\mathbb{R}}, \oplus, \odot) \) is the set \( \bar{\mathbb{R}} = \mathbb{R} \cup \left\{  \infty \right\}\) with 
+		\begin{gather*}
+			y \oplus x = \min\left\{ x,y \right\} \quad \text{and} \quad x \odot y = x + y \qquad x,y \in \bar{\mathbb{R}} 
+		\end{gather*}
+		For example:
+			\begin{align*}
+				4 \oplus 5 = 4, \quad4 \odot 5 = 9, \quad (-100) \oplus (-10) = -100, \quad x= 0 \odot x \quad \forall x \in \mathbb{R}
+			\end{align*}
+
+		 \begin{exercise}{What is the additive and multiplicative neutral element?}{}
+			Find an \( x \in \mathbb{R} \cup \left\{ \infty \right\} \) such that \( y = y \oplus x \) for all \( y \in \mathbb{R} \).
+
+			Find an \( x \in \mathbb{R} \) such that \( y = y \odot x \) for all \( y \in \mathbb{R} \).
+		 \end{exercise}
+   
+		 \begin{exercise}{What is the division? How about subtraction?}{}
+			Find an \( x \in \mathbb{R} \) such that \( 10 = x \odot 3 \). Can we always do this?
+			
+			Can we find \( x \in \mathbb{R} \) such that \( 17 = 10 \oplus x \)?
+		 \end{exercise}
+
+		 \begin{exercise}{Freshman's dream}{}
+			If you are bored at home, try proving \( (x \oplus y)^{\odot 3} = x^{\odot 3} \oplus y^{\odot 3} \).
+		 \end{exercise}
+
+	\item Vector operations: \( \oplus \) and \( \odot \) operate component-wise
+	\begin{align*}
+		\begin{bmatrix}
+			4 \\ 2
+		\end{bmatrix}
+		\oplus
+		\begin{bmatrix}
+			2 \\ 5
+		\end{bmatrix}
+		= 
+		\begin{bmatrix}
+			\min\left\{ 4,2 \right\} \\
+			\min \left\{ 2,5 \right\}
+		\end{bmatrix} = \begin{bmatrix}
+			2 \\ 2
+		\end{bmatrix}, \quad 
+		42 \odot 
+		\begin{bmatrix}
+			3 \\ 2
+		\end{bmatrix} = \begin{bmatrix}
+			45 \\ 44
+		\end{bmatrix}
+	\end{align*}
+
+  \item Matrix-vector operation: \( \begin{bmatrix}
+		2 & 3 \\
+		5 & 11
+	\end{bmatrix} \odot
+	\begin{bmatrix}
+		4 \\ 0
+	\end{bmatrix} =
+	\begin{bmatrix}
+		3 \\ 9
+	\end{bmatrix} \)
+\end{itemize}
+
+\newpage
+
+\subsection*{B. Tropical Linear Algebra}
+
+\begin{itemize}
+	 \item Tropical arithmetic occurs naturally in discrete math; for example
+
+		\begin{theorem*}{Shortest Path \cite[Prop. 7.9]{inv2nonlinearalgebra}}{}
+			Let \( D_G  \) be the adjacency matrix of a directed graph \( G \) which has only non-negative edges and contains no loops.
+			Then, the length of the shortest path from node \( i \) to \( j \) is given by row \( i \) and column \( j \) of the matrix 
+			\begin{align*}
+				D_G^{\odot(n-1)} = D_G \odot \cdots \odot D_G.
+			\end{align*}
+		\end{theorem*}
+
+		\begin{proof}
+			See blackboard.
+		\end{proof}
+		
+		\begin{example*}{}{}
+			\begin{figure}[H]
+				\centering
+				\input{tikz/shortest-path.tikz}
+			\end{figure}
+			$$
+				D_G = \begin{bmatrix}
+					0 & 2 & 1 \\
+					1 & 0 & 4 \\
+					5 & 2 & 0
+				\end{bmatrix} \quad \text{and} \quad D_G^{\odot 2} = \begin{bmatrix}
+					0 & 2 &1 \\ 1 & 0 & 2 \\ 3 & 2 & 0
+				\end{bmatrix}.
+			$$
+
+			Row \( 3 \) and column \( 1 \) of \(  D_G^{\odot 2} \) yields that the shortest path from node \( 3 \) to \( 1 \) has length \( 3 \) (consider path \( 3 \leadsto 2 \leadsto 1 \) which is shorter that \( 3 \leadsto 1 \)). 
+		\end{example*}
+		
+		\begin{exercise}{	Why does the Shortest Path Theorem fail for graphs with loops?}{}
+			Note: the \textbf{\textit{Kleene plus}}
+			\begin{align*}
+				D_G^+ = D_G \oplus D_G^{\odot 2} \oplus ... \oplus D_G^{\odot n}.
+			\end{align*} generalizes the Shortest Path Theorem to graphs with \emph{negative} edge lengths and \emph{loops}; see \cite[Exercise 1.9 (5)]{MaclaganSturmfels}
+		 \end{exercise}
+ 	
+	\item \textbf{\emph{Tropical determinant}} of an \( n \times n \)-matrix \( X = (x_{ij}) \) is defined as 
+	\begin{align*}
+		\mathrm{tropdet}(X) = \bigoplus_{\pi \in S_n} x_{1 \pi(1)} \odot x_{2 \pi(2)} \odot \cdots \odot x_{n \pi(n)},
+	\end{align*}
+	where \( S_n = \left\{ \pi : \text{\( \pi\) is a permutation of } \left\{ 1,2,...,n \right\}\right\} \)
+	\begin{theorem*}{Assignment Problem  \cite[Prop. 7.10]{inv2nonlinearalgebra}}{}
+		The optimal cost of the assignment problem is given by the tropical determinant.
+	\end{theorem*}
+	\begin{proof}
+		Follows directly from definition.
+	\end{proof}
+
+	\begin{example*}{}{}
+		\( \mathrm{tropdet} \begin{bmatrix}
+			1 & 5 & \mathbf{0} \\
+			\mathbf{2} & 7 & 4 \\
+			0 & \mathbf{3} & 2
+		\end{bmatrix} = 0 \odot 2 \odot 3 = 5 \)
+	\end{example*}
+
+	\item An \textbf{\textit{eigenvalue}} \( \lambda \in \mathbb{R}  \) of \( A \in \bar{\mathbb{R}}^{n \times n} \) is a scalar that satisfies 
+	\begin{align*}
+		A \odot v = \lambda \odot v\quad \text{for some \( v \in \mathbb{R}^n \)}
+	\end{align*}
+ 
+	\begin{theorem*}{Square matrices have exactly one eigenvalue  \cite[Thm. 7.11]{inv2nonlinearalgebra}}{}
+		Let \( A \) be an \( n \times n \)-matrix whose graph \( G(A) \) is strongly connected. Then, \( A \) has \emph{precisely} one eigenvalue, denoted \( \lambda(A) \). The eigenvalue \( \lambda(A) \) equals the minimum of normalized length over all directed cycles in \( G(A) \).
+	\end{theorem*}
+
+	\begin{proof}
+		See blackboard. We use the {\textit{Kleene plus}}.
+	\end{proof}
+
+	\begin{example*}{}{}
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.4,xscale=0.4]
+%uncomment if require: \path (0,416); %set diagram left start at 0, and has height of 416
+
+%Shape: Circle [id:dp8552406885330566] 
+\draw   (100,155) .. controls (100,141.19) and (111.19,130) .. (125,130) .. controls (138.81,130) and (150,141.19) .. (150,155) .. controls (150,168.81) and (138.81,180) .. (125,180) .. controls (111.19,180) and (100,168.81) .. (100,155) -- cycle ;
+%Shape: Circle [id:dp09770625656490761] 
+\draw   (307,155) .. controls (307,141.19) and (318.19,130) .. (332,130) .. controls (345.81,130) and (357,141.19) .. (357,155) .. controls (357,168.81) and (345.81,180) .. (332,180) .. controls (318.19,180) and (307,168.81) .. (307,155) -- cycle ;
+%Shape: Circle [id:dp20108922600222412] 
+\draw   (202,274) .. controls (202,260.19) and (213.19,249) .. (227,249) .. controls (240.81,249) and (252,260.19) .. (252,274) .. controls (252,287.81) and (240.81,299) .. (227,299) .. controls (213.19,299) and (202,287.81) .. (202,274) -- cycle ;
+%Curve Lines [id:da03416611292826599] 
+\draw    (150,155) .. controls (208.71,136.56) and (243.65,129.54) .. (306.06,154.62) ;
+\draw [shift={(307,155)}, rotate = 202.06] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da09658173369640033] 
+\draw    (307,155) .. controls (241.33,172.38) and (216.25,171.48) .. (150.99,155.25) ;
+\draw [shift={(150,155)}, rotate = 14.01] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da3395837262637085] 
+\draw    (332,180) .. controls (326.06,225.01) and (304.44,263.69) .. (253.55,273.71) ;
+\draw [shift={(252,274)}, rotate = 349.61] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da5148363316884303] 
+\draw    (252,274) .. controls (255.96,235.85) and (280.5,185.49) .. (330.48,180.15) ;
+\draw [shift={(332,180)}, rotate = 174.99] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da9847848128429115] 
+\draw    (202,274) .. controls (148.54,251.69) and (128.4,231.87) .. (125.1,181.53) ;
+\draw [shift={(125,180)}, rotate = 86.66] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da7368989634069993] 
+\draw    (125,180) .. controls (168.34,201.15) and (194.22,232.51) .. (201.67,272.18) ;
+\draw [shift={(202,274)}, rotate = 260.2] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da28578807140619644] 
+\draw    (111,133) .. controls (78.16,48.42) and (27.51,133.14) .. (104.82,137.93) ;
+\draw [shift={(106,138)}, rotate = 182.9] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da43144841205548556] 
+\draw    (348,134) .. controls (426.61,97.18) and (362.65,44.53) .. (341.32,128.72) ;
+\draw [shift={(341,130)}, rotate = 283.72] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da006765799998244226] 
+\draw    (227,299) .. controls (264.81,374.62) and (187.78,401.73) .. (217.54,298.57) ;
+\draw [shift={(218,297)}, rotate = 106.45] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+% Text Node
+\draw (114,144.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+% Text Node
+\draw (326,147.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+% Text Node
+\draw (215,262.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+% Text Node
+\draw (222,105.4) node [anchor=north west][inner sep=0.75pt]    {$5$};
+% Text Node
+\draw (223,173.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+% Text Node
+\draw (327,235.4) node [anchor=north west][inner sep=0.75pt]    {$4$};
+% Text Node
+\draw (250,197.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+% Text Node
+\draw (128,240.4) node [anchor=north west][inner sep=0.75pt]    {$0$};
+% Text Node
+\draw (176,198.4) node [anchor=north west][inner sep=0.75pt]    {$0$};
+% Text Node
+\draw (44,78.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+% Text Node
+\draw (395,69.4) node [anchor=north west][inner sep=0.75pt]    {$7$};
+% Text Node
+\draw (216,373.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+
+
+\end{tikzpicture}
+
+		Consider the \( 1 \)-cycle \( 2 \leadsto 2 \). It has normalized length \( \frac{7}{1} = 7 \).
+
+		Consider the \( 2 \)-cycle \( 1 \leadsto 2 \leadsto 1 \). It has normalized length \( \frac{5 + 2}{2} = 3.5 \).
+
+		Consider the \( 2 \)-cycle \( 1 \leadsto 3 \leadsto 1 \). It has normalized length \( \frac{0 + 0}{2} = 0 \). In fact, \( \lambda(A) = 0 \).
+	\end{example*}
+
+	\item The \textbf{\textit{eigenspace}} is defined as \( \mathrm{Eig}(A) = \left\{ x \in \mathbb{R}^n : A \odot x = \lambda \odot x \right\} \)
+		\begin{itemize}
+			\item Define \( B = (-\lambda(A)) \odot A \)
+   		\item Simple to see: \( \mathrm{Eig}(A) = \mathrm{Eig}(B) = \left\{ x : B \odot x = x \right\} \)
+		\end{itemize}
+ 
+	\begin{theorem*}{The eigenspace of a tropical matrix  \cite[Thm. 7.13]{inv2nonlinearalgebra}}{}
+		Let \( B^+_0 \) be the submatrix of \( B^+ \) given by those columns whose diagonal entry \( B_{jj}^+ \) is zero. The (tropical) image of this matrix is equal to the eigenspace of \( A \)
+		\begin{align*}
+			\mathrm{Eig}(A) = \mathrm{Eig}(B) = \mathrm{Image}(B^+_0).
+		\end{align*}
+	\end{theorem*}
+
+	\begin{proof}
+		Omitted.
+	\end{proof}
+\end{itemize}
+
+\subsection*{C. Literature}
+\bibliographystyle{plain}
+\bibliography{bibliography/refs}
+
+\end{document}
