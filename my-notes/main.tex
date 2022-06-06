@@ -9,7 +9,7 @@
 
 \section*{Tropical Algebra}
 
-\subsection*{A.}
+\subsection*{A. Plane Curves}
 
 \begin{itemize}
 	\item \( S \subset \mathbb{R}^n \) is \textbf{\textit{tropically convex}} if \( x,y \in S \) and \( a,b \in \mathbb{R} \) implies that \( a \odot x \oplus b \odot y \in S \)
@@ -30,7 +30,7 @@
  
 \end{itemize}
 
-\subsection*{B. Tropical Linear Algebra}
+\subsection*{B.1 Tropical Eigenspace}
 
 \begin{itemize}
 	\item We want to compute the eigenspace of 
@@ -109,7 +109,7 @@
 		So, \( b \in [a-1, a] \). Next, by assumption we have  \( x = a - 1 - b \) and \( y = a-b \). Subtracting the first equation with the second gives \( x - y = - 1 \). Hence, \( x + 1 = y \). Since \( b \in [a-1, a] \), we obtain \( x \in [-1,0] \). With this information, we draw a line segment \( x + 1 = y \) for \( x \in [-1,0] \):
 		\begin{figure}[H]
 			\centering
-			\begin{tikzpicture}
+			\begin{tikzpicture}[scale=0.8]
 				\draw[step=1cm,gray,very thin] (-2.9,-2.9) grid (2.9,2.9);
 
 				\filldraw[color=black, fill=black!25, thick] (-1, 0) -- (0,1);
@@ -125,7 +125,7 @@
 		However, this does not finish the computation of the convex hull yet. We still need to consider the other cases. Some lead to contradictions, some lead to valid cases. If we compute everything correctly, we will obtain the following picture for the convex hull of \( \left\{ [-1,0, 0]^T, [1,1,0]^T \right\} \):
 		\begin{figure}[H]
 			\centering
-			\begin{tikzpicture}
+			\begin{tikzpicture}[scale=0.8]
 				\draw[step=1cm,gray,very thin] (-2.9,-2.9) grid (2.9,2.9);
 
 				\draw[color=black, thick] (-1, 0) -- (0,1) -- (1,1);
@@ -140,4 +140,32 @@
 			\caption{Convex hull of \( \left\{ [-1,0, 0]^T, [1,1,0]^T \right\} \)}
 		\end{figure}
 	\end{itemize}
+
+\subsection*{B.2 Tropical Triangles}
+\begin{itemize}
+	\item The example is taken from the book \textit{Invitation to Nonlinear Algebra}, Example 7.15. We want to draw the tropical triangle 
+	\begin{align*}
+		A =
+		\begin{bmatrix}
+			0 & 0 & 2 \\ 0 & 3 & 1 \\ 1 & 0 & 0
+		\end{bmatrix}
+	\end{align*}
+	in \( \mathbb{R}^3 / \mathbb{R}1 \). The image of this matrix is a tropical triangle and looks like this 
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[scale=0.8]
+			\draw[step=1cm,gray,very thin] (-1.9,-1.9) grid (2.9,3.9);
+
+			\draw[color=black, fill=black!25, thick] (-1,-1) -- (0,0) -- (0,3) -- (0,1) -- (2,1) -- (1,1) -- (0,0);
+
+			\filldraw[black] (-1,-1) circle (2pt);
+			\filldraw[black] (0,3) circle (2pt);
+			\filldraw[black] (2,1) circle (2pt);
+
+			\filldraw[gray] (0,0) circle (2pt);
+			\node[anchor=north west] at (0,0) {$(0,0)$};
+		\end{tikzpicture}
+		\caption{Image of \( A \)}
+	\end{figure}
+\end{itemize}
 \end{document}
